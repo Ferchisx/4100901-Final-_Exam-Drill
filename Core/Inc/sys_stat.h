@@ -10,7 +10,6 @@
 
 #include <stdint.h>
 
-void heartbeat(void);
 void sys_stat(uint8_t state);
 
 #endif /* INC_SYS_STAT_H_ */

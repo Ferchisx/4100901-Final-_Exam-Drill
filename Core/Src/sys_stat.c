@@ -24,4 +24,5 @@ void sys_stat(uint8_t state){
 			time = time - 250;
 		}
 	}
+	HAL_GPIO_WritePin(SYSTEM_LED_GPIO_Port, SYSTEM_LED_Pin, 1);
 }

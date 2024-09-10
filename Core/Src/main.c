@@ -22,7 +22,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
-//#include "sys_stat.h"
+#include "sys_stat.h"
 #include "keypad.h"
 #include "oled.h"
 /* USER CODE END Includes */
@@ -48,7 +48,6 @@ I2C_HandleTypeDef hi2c1;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
-char my_id[] = "1056120378";
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -71,7 +70,8 @@ int _write(int file, char *ptr, int len)
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
 	uint8_t key_pressed = keypad_scan(GPIO_Pin);
-	print(key_pressed);
+	uint8_t state = digits(key_pressed);
+	sys_stat(state);
 }
 /* USER CODE END 0 */
 
