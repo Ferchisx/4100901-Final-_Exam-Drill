@@ -24,7 +24,7 @@
 #include <stdio.h>
 #include "sys_stat.h"
 #include "keypad.h"
-#include "oled.h"
+#include "control.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -48,6 +48,7 @@ I2C_HandleTypeDef hi2c1;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
+uint8_t state;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -70,8 +71,11 @@ int _write(int file, char *ptr, int len)
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
 	uint8_t key_pressed = keypad_scan(GPIO_Pin);
-	uint8_t state = digits(key_pressed);
-	sys_stat(state);
+	if(key_pressed == '#'){
+		state = compare();
+	}else{
+		digits(key_pressed);
+	}
 }
 /* USER CODE END 0 */
 
@@ -107,13 +111,20 @@ int main(void)
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
   ssd1306_Init();
-  ssd1306_SetCursor(25,30);
+  ssd1306_SetCursor(10,30);
+
+//  HAL_GPIO_WritePin(SYSTEM_LED_GPIO_Port, SYSTEM_LED_Pin, 1);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  if(state == 0 || state == 1){
+		  sys_stat(state);
+		  HAL_GPIO_WritePin(SYSTEM_LED_GPIO_Port, SYSTEM_LED_Pin, 0);  // LED OFF
+	  }
+	  state = 0xFF;
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
