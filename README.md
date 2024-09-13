@@ -1,5 +1,6 @@
 # 4100901-Final_Exam-Drill
-Please fork this repo, then clone it into your computer, and place your work for the Final exam here.
+Preparation workshop for the computational structures final exam.
+Made by Felipe Fernández Alzate
 
 ## Criterio de Evaluación 
 
